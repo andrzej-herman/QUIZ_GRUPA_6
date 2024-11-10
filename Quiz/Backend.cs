@@ -8,28 +8,67 @@ namespace Quiz
 {
     public class Backend
     {
+        public Backend()
+        {
+            CreateAllQuestions();
+            CurrentCategory = 100;
+        }
+
+
+        public List<Question> AllQuestions { get; set; }
+        public int CurrentCategory { get; set; }
+        public Question CurrentQuestion { get; set; }
+
         public void CreateAllQuestions()
         {
+            AllQuestions = new List<Question>();
+            var q1 = new Question();
+            q1.Id = 1;
+            q1.Category = 100;
+            q1.Content = "Jakiego koloru jest niebo?";
+            q1.Answers = new List<Answer>();
+            var a1 = new Answer();
+            a1.Id = 1;
+            a1.Content = "niebieskie";
+            a1.IsCorrect = true;
+            q1.Answers.Add(a1);
 
+            var a2 = new Answer();
+            a2.Id = 2;
+            a2.Content = "zielone";
+            q1.Answers.Add(a2);
 
+            var a3 = new Answer();
+            a3.Id = 3;
+            a3.Content = "czarne";
+            q1.Answers.Add(a3);
 
-            //var q1 = new Question();
-            //q1.Id = 1;
-            //q1.Category = 100;
-            //q1.Content = "Jakiego koloru jest niebo?";
-            //q1.Answer_1 = "niebieskie";
-            //q1.Answer_2 = "zielone";
-            //q1.Answer_3 = "czarne";
-            //q1.Answer_4 = "czerwone";
+            var a4 = new Answer();
+            a4.Id = 4;
+            a4.Content = "czerwone";
+            q1.Answers.Add(a4);
 
-            //Question q2 = new Question();
-            //q2.Id = 2;
-            //q2.Category = 200;
-            //q2.Content = "Ile wynosi pierwiatek z 3?";
-            //q2.Answer_1 = "1,73";
-            //q2.Answer_2 = "2";
-            //q2.Answer_3 = "3,14";
-            //q2.Answer_4 = "1.72";
+            AllQuestions.Add(q1);
+        }
+
+        public void GetQuestion()
+        {
+            // symulujemy, że losujemy
+            // a po prostu bieżemy pierwsze pytanie z brzegu
+            CurrentQuestion = AllQuestions[0];
+        }
+
+        public bool CheckPlayerChoice(int playerChoice)
+        {
+            var anyAnswer = CurrentQuestion.Answers
+                .FirstOrDefault(a => a.Id == playerChoice);
+
+            if (anyAnswer != null)
+            {
+                return anyAnswer.IsCorrect;
+            }
+
+            return false;  
         }
     }
 }

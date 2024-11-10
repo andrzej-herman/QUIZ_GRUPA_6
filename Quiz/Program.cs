@@ -1,23 +1,34 @@
 ﻿using Quiz;
 
+
+// powołanie do życia obiektów typu Backend
 var backend = new Backend();
-var frontend = new Frontend();
 
 
+// tworzenie listy wszystkich pytań => W konstruktorze
+// ustawienie kategorii na najniższą = > W konstruktorze
 
-var numbers = new List<string>();
-numbers.Add("Ala");
-numbers.Add("Basia");
-numbers.Add("Ala");
-numbers.Add("Tomek");
+// wyświetlanie ekranu powitalnego
+Frontend.ShowWelcomeScreen();
 
-var name = numbers[3];
-Console.WriteLine(name);
+// losowanie pytania
+backend.GetQuestion();
 
-int howMuch = numbers.Count;
-Console.WriteLine(howMuch);
+// wyswietlanie pytania
+var playerChoice = Frontend.DisplayQuestion(backend.CurrentQuestion);
 
+// walidacja odpowiedzi gracza
+var isCorrect = backend.CheckPlayerChoice(playerChoice);
 
+// rozdzielenie logi w zależności od odpowiedzi gracza
+if (isCorrect)
+{
+    Console.WriteLine(" HURRA !!!!");
+}
+else
+{
+    Console.WriteLine(" GAME OVER !!!!");
+}
 
 
 Console.ReadLine();

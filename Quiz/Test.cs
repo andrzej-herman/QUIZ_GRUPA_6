@@ -6,28 +6,44 @@ using System.Threading.Tasks;
 
 namespace Quiz
 {
-    public class Test
+    public static class Test
     {
-
-
-
-        // metoda która zwraca wartosć
-        public int AddTwoNumbers(int x, int y)
+        public static void MakeTest()
         {
-            return x + y;
+            //int counter = 1;
+            //while (true)
+            //{
+            //    Console.WriteLine(counter);
+            //    break;
+            //}
+
+            //List<int> names = [23, 56, 345, 1];
+            //names.Add(34);
+
+
+            //foreach (var x in names)
+            //{
+            //    Console.WriteLine(x);
+            //}
+
+
+            //for (int counter = 0; counter < 5345345; counter++)
+            //{
+            //    Console.WriteLine(counter + 1);
+            //    break;
+            //}
+
+            //var x = 5;
+
+            //if (poprawna)
+            //{
+            //    Brawo
+            //}
+            //else
+            //{
+            //   GAme Over
+            //}
+
         }
-
-        public string ChangeTextToCapitalLetters(string text)
-        {
-            return text.ToUpper();
-        }
-
-
-        // nie zwraca
-        public void DisplaySomething()
-        {
-            Console.WriteLine("SOMETHING");
-        }
-
     }
 }
