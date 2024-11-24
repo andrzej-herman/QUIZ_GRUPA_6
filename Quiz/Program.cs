@@ -11,24 +11,38 @@ var backend = new Backend();
 // wyświetlanie ekranu powitalnego
 Frontend.ShowWelcomeScreen();
 
-// losowanie pytania
-backend.GetQuestion();
-
-// wyswietlanie pytania
-var playerChoice = Frontend.DisplayQuestion(backend.CurrentQuestion);
-
-// walidacja odpowiedzi gracza
-var isCorrect = backend.CheckPlayerChoice(playerChoice);
-
-// rozdzielenie logi w zależności od odpowiedzi gracza
-if (isCorrect)
+while(true)
 {
-    Console.WriteLine(" HURRA !!!!");
-}
-else
-{
-    Console.WriteLine(" GAME OVER !!!!");
-}
+    // losowanie pytania
+    backend.GetQuestion();
 
+    // wyswietlanie pytania
+    var playerChoice = Frontend.DisplayQuestionAndGetAnswer(backend.CurrentQuestion);
+
+    // walidacja odpowiedzi gracza
+    var isCorrect = backend.CheckPlayerChoice(playerChoice);
+
+    // rozdzielenie logi w zależności od odpowiedzi gracza
+    if (isCorrect)
+    {
+        // sprawdzanie czy to nie było ostatnie pytanie
+        if (backend.CheckIfLastAnswer())
+        {
+            Frontend.Winner();
+            break;
+        }
+        else
+        {
+            Frontend.GoodAnswer(backend.CurrentCategory);
+            // podnismy kategorie na wyzszą
+            backend.IncreaseCategory();
+        }
+    }
+    else
+    {
+        Frontend.GameOver();
+        break;
+    }
+}
 
 Console.ReadLine();

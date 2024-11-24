@@ -1,61 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace Quiz
 {
     public class Backend
     {
+        Random random;
+
         public Backend()
         {
+            random = new Random();
             CreateAllQuestions();
-            CurrentCategory = 100;
+            Categories = AllQuestions!.Select(q => q.Category).Distinct().OrderBy(c => c).ToList();
+            CurrentCategory = Categories[CurrentIndex];
         }
 
-
+        public int CurrentIndex { get; set; }
+        public List<int> Categories { get; set; }
         public List<Question> AllQuestions { get; set; }
         public int CurrentCategory { get; set; }
         public Question CurrentQuestion { get; set; }
 
         public void CreateAllQuestions()
         {
-            AllQuestions = new List<Question>();
-            var q1 = new Question();
-            q1.Id = 1;
-            q1.Category = 100;
-            q1.Content = "Jakiego koloru jest niebo?";
-            q1.Answers = new List<Answer>();
-            var a1 = new Answer();
-            a1.Id = 1;
-            a1.Content = "niebieskie";
-            a1.IsCorrect = true;
-            q1.Answers.Add(a1);
-
-            var a2 = new Answer();
-            a2.Id = 2;
-            a2.Content = "zielone";
-            q1.Answers.Add(a2);
-
-            var a3 = new Answer();
-            a3.Id = 3;
-            a3.Content = "czarne";
-            q1.Answers.Add(a3);
-
-            var a4 = new Answer();
-            a4.Id = 4;
-            a4.Content = "czerwone";
-            q1.Answers.Add(a4);
-
-            AllQuestions.Add(q1);
+            var path = $"{Directory.GetCurrentDirectory()}\\questions.json";
+            var text = File.ReadAllText(path);
+            AllQuestions = JsonSerializer.Deserialize<List<Question>>(text)!;
         }
 
         public void GetQuestion()
         {
-            // symulujemy, że losujemy
-            // a po prostu bieżemy pierwsze pytanie z brzegu
-            CurrentQuestion = AllQuestions[0];
+            var questionsFromCurrentCategory = AllQuestions.Where(q => q.Category == CurrentCategory).ToList();
+            var index = random.Next(0, questionsFromCurrentCategory.Count);
+            var selectedQuestion = questionsFromCurrentCategory[index];
+            selectedQuestion.Answers = selectedQuestion.Answers.OrderBy(a => random.Next()).ToList();
+            var id = 1;
+            selectedQuestion.Answers.ForEach(a => a.Id = id++);
+            CurrentQuestion = selectedQuestion;
         }
 
         public bool CheckPlayerChoice(int playerChoice)
@@ -69,6 +49,18 @@ namespace Quiz
             }
 
             return false;  
+        }
+
+        public bool CheckIfLastAnswer()
+        {
+           var maximumIndex = Categories.Count - 1;
+           return CurrentIndex == maximumIndex;
+        }
+
+        public void IncreaseCategory()
+        {
+            CurrentIndex++;
+            CurrentCategory = Categories[CurrentIndex];
         }
     }
 }
