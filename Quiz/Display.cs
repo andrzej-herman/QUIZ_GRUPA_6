@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuizData.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Quiz
 {
-    public static class Frontend
+    public static class Display
     {
         private static List<string> acceptedKeys = ["1", "2", "3", "4"];
         

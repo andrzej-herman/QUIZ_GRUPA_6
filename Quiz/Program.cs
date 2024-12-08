@@ -2,14 +2,14 @@
 
 
 // powołanie do życia obiektów typu Backend
-var backend = new Backend();
+var backend = new Game();
 
 
 // tworzenie listy wszystkich pytań => W konstruktorze
 // ustawienie kategorii na najniższą = > W konstruktorze
 
 // wyświetlanie ekranu powitalnego
-Frontend.ShowWelcomeScreen();
+Display.ShowWelcomeScreen();
 
 while(true)
 {
@@ -17,7 +17,7 @@ while(true)
     backend.GetQuestion();
 
     // wyswietlanie pytania
-    var playerChoice = Frontend.DisplayQuestionAndGetAnswer(backend.CurrentQuestion);
+    var playerChoice = Display.DisplayQuestionAndGetAnswer(backend.CurrentQuestion);
 
     // walidacja odpowiedzi gracza
     var isCorrect = backend.CheckPlayerChoice(playerChoice);
@@ -28,19 +28,19 @@ while(true)
         // sprawdzanie czy to nie było ostatnie pytanie
         if (backend.CheckIfLastAnswer())
         {
-            Frontend.Winner();
+            Display.Winner();
             break;
         }
         else
         {
-            Frontend.GoodAnswer(backend.CurrentCategory);
+            Display.GoodAnswer(backend.CurrentCategory);
             // podnismy kategorie na wyzszą
             backend.IncreaseCategory();
         }
     }
     else
     {
-        Frontend.GameOver();
+        Display.GameOver();
         break;
     }
 }

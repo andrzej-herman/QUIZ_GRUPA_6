@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quiz
+namespace QuizData.Models
 {
-    public class Answer
+    public class Answer : Base
     {
-        public int Id { get; set; }
-        public string Content { get; set; }
         public bool IsCorrect { get; set; }
     }
 }
